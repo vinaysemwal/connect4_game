@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration monitorInterval="60">
+  <properties>
+    <property name="log-path">/tmp</property>
+    <property name="archive-path">/tmp/connect4App</property>
+  </properties>
+  <Appenders>
+    <RollingFile name="App-File-Appender" fileName="${log-path}/connect4App.log"
+     filePattern="${archive-path}/connect4App.log.%d{yyyy-MM-dd}.gz">
+      <PatternLayout>
+        <pattern>
+          [%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+        </pattern>
+      </PatternLayout>
+      <Policies>
+        <TimeBasedTriggeringPolicy />
+        <SizeBasedTriggeringPolicy size="10 MB" />
+      </Policies>
+      <DefaultRolloverStrategy max="1" />
+    </RollingFile>
+    <RollingFile name="Jetty-File-Appender" fileName="${log-path}/containerLog.log"
+     filePattern="${archive-path}/containerLog.log.%d{yyyy-MM-dd}.gz">>
+      <PatternLayout>
+        <pattern>
+          [%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+        </pattern>
+      </PatternLayout>
+      <Policies>
+        <TimeBasedTriggeringPolicy />
+        <SizeBasedTriggeringPolicy size="10 MB" />
+      </Policies>
+      <DefaultRolloverStrategy max="1" />
+    </RollingFile>
+  </Appenders>
+  <Loggers>
+    <Logger name="org.eclipse.jetty" level="info" additivity="false">
+      <AppenderRef ref="Jetty-File-Appender" />
+    </Logger>
+    <Logger name="com.gluck.gaming" level="info" additivity="false">
+      <AppenderRef ref="App-File-Appender" />
+    </Logger>
+  </Loggers>
+</configuration>
